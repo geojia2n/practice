@@ -1,0 +1,1261 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>教育實習申請流程</title>
+    <style>
+        :root {
+            --primary-color: #a63f38;   /* 圖片中的深紅色 */
+            --accent-color: #5d7a46;    /* 圖片中的樹木綠色 */
+            --bg-color: #fcf6ee;        /* 圖片中的暖米色背景 */
+            --text-color: #33221c;      /* 深咖啡色文字 */
+            --white: #ffffff;
+            --gray: #e0dcd5;
+            --shadow-sm: 0 2px 8px rgba(166, 63, 56, 0.04);
+            --shadow-md: 0 8px 24px rgba(166, 63, 56, 0.08);
+            --shadow-lg: 0 12px 30px rgba(166, 63, 56, 0.15);
+            --transition-smooth: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: "Helvetica Neue", Helvetica, Arial, "Microsoft JhengHei", 微軟正黑體, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            padding: 40px 20px;
+            overflow-x: hidden;
+        }
+
+        @keyframes containerEntrance {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background-color: var(--white);
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: var(--shadow-md);
+            animation: containerEntrance 1s cubic-bezier(0.16, 1, 0.3, 1) both;
+        }
+
+        h1 {
+            text-align: center;
+            color: var(--primary-color);
+            margin-bottom: 40px;
+            font-size: 2rem;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        h1::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background-color: var(--accent-color);
+            border-radius: 2px;
+        }
+
+        a {
+            color: var(--primary-color);
+            text-decoration: underline;
+            font-weight: bold;
+            transition: var(--transition-smooth);
+            position: relative;
+        }
+        
+        a:hover {
+            color: var(--accent-color);
+        }
+
+        .timeline-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            margin-bottom: 40px;
+            padding: 0 10px;
+        }
+
+        .timeline-line {
+            position: absolute;
+            top: 35px;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background-color: var(--gray);
+            z-index: 1;
+        }
+
+        .timeline-progress {
+            position: absolute;
+            top: 35px;
+            left: 0;
+            width: 0%;
+            height: 4px;
+            background-color: var(--primary-color);
+            z-index: 1;
+            /* 使用更具彈性的過渡曲線，讓進度條跑起來更有動感 */
+            transition: width 0.6s cubic-bezier(0.34, 1.56, 0.64, 1), height 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        /* 節點載入時的彈出動畫 */
+        @keyframes nodePop {
+            0% {
+                opacity: 0;
+                transform: scale(0.6);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .timeline-node {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            cursor: pointer;
+            z-index: 2;
+            flex: 1;
+            animation: nodePop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+        }
+
+        /* 讓五個步驟節點依序彈出 */
+        .timeline-node:nth-child(3) { animation-delay: 0.15s; }
+        .timeline-node:nth-child(4) { animation-delay: 0.3s; }
+        .timeline-node:nth-child(5) { animation-delay: 0.45s; }
+        .timeline-node:nth-child(6) { animation-delay: 0.6s; }
+        .timeline-node:nth-child(7) { animation-delay: 0.75s; }
+
+        /* 目前選中步驟的呼吸光暈效果 */
+        @keyframes activePulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(166, 63, 56, 0.4);
+            }
+            70% {
+                box-shadow: 0 0 0 10px rgba(166, 63, 56, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(166, 63, 56, 0);
+            }
+        }
+
+        .circle {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background-color: var(--white);
+            border: 4px solid var(--gray);
+            color: var(--text-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.4rem;
+            font-weight: bold;
+            transition: var(--transition-smooth);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .node-title {
+            margin-top: 10px;
+            font-size: 0.95rem;
+            font-weight: bold;
+            color: #7c726e;
+            transition: var(--transition-smooth);
+        }
+
+        /* 懸停於未啟用的節點時有微微縮放 */
+        .timeline-node:not(.active):hover .circle {
+            transform: scale(1.05);
+            border-color: #b5aba4;
+            color: var(--primary-color);
+        }
+
+        .timeline-node.active .circle {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+            color: var(--white);
+            transform: scale(1.1);
+            animation: activePulse 2s infinite;
+        }
+
+        .timeline-node.active .node-title {
+            color: var(--primary-color);
+            transform: translateY(2px);
+        }
+
+        .content-container {
+            background-color: #faf7f2;
+            border-left: 5px solid var(--primary-color);
+            border-radius: 0 12px 12px 0;
+            padding: 30px;
+            min-height: 250px;
+            margin-bottom: 40px;
+            box-shadow: inset 2px 2px 8px rgba(0,0,0,0.01);
+        }
+
+        @keyframes panelSlideIn {
+            from { 
+                opacity: 0; 
+                transform: translateY(12px); 
+            }
+            to { 
+                opacity: 1; 
+                transform: translateY(0); 
+            }
+        }
+
+        .content-panel {
+            display: none;
+            animation: panelSlideIn 0.5s cubic-bezier(0.25, 1, 0.5, 1) both;
+        }
+
+        .content-panel.active {
+            display: block;
+        }
+
+        h2 {
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            font-size: 1.4rem;
+            border-bottom: 1px dashed var(--gray);
+            padding-bottom: 10px;
+        }
+
+        p, div {
+            margin-bottom: 12px;
+            font-size: 1.05rem;
+        }
+
+        .indent-1 { padding-left: 20px; }
+        .indent-2 { padding-left: 40px; }
+        
+        .alert-box {
+            background-color: #fff1f0;
+            border: 1px solid #ffa39e;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            transition: var(--transition-smooth);
+        }
+        .alert-box:hover {
+            transform: translateX(4px);
+            box-shadow: 2px 4px 12px rgba(245, 34, 45, 0.05);
+        }
+
+        .alert-title {
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: 5px;
+        }
+
+        .calc-widget {
+            background-color: #f5ece1;
+            border: 2px solid var(--primary-color);
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: var(--shadow-sm);
+            margin-top: 10px;
+        }
+
+        .calc-tabs {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .calc-tab {
+            padding: 12px 10px;
+            border-radius: 10px;
+            border: 2px solid #c9bdae;
+            background-color: var(--white);
+            color: var(--text-color);
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 2px;
+        }
+
+        .tab-year {
+            font-size: 1.15rem;
+            font-weight: 900;
+            line-height: 1.2;
+            text-align: center;
+        }
+
+        .tab-title {
+            font-size: 1.15rem;
+            font-weight: bold;
+            line-height: 1.2;
+            text-align: center;
+        }
+
+        .calc-tab:hover {
+            border-color: var(--primary-color);
+            background-color: #faf7f2;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(166, 63, 56, 0.1);
+        }
+
+        .calc-tab:active {
+            transform: translateY(-1px);
+        }
+
+        .calc-tab.active {
+            border-color: var(--primary-color);
+            background-color: var(--primary-color);
+            color: var(--white);
+            box-shadow: var(--shadow-lg);
+            transform: translateY(-2px);
+        }
+
+        .calc-result {
+            background-color: var(--white);
+            border-radius: 8px;
+            padding: 20px;
+            border-left: 4px solid var(--accent-color);
+            animation: panelSlideIn 0.5s cubic-bezier(0.25, 1, 0.5, 1) both;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .calc-result-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            border-bottom: 1px dashed #ede8e0;
+            padding-bottom: 15px;
+            margin-bottom: 15px;
+        }
+
+        .calc-result h4 {
+            font-size: 1.15rem;
+            color: var(--accent-color);
+            font-weight: bold;
+            margin: 0;
+        }
+
+        /* 狀態標籤的呼吸微縮放動畫 */
+        @keyframes badgePulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .status-badge {
+            font-size: 0.85rem;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-weight: bold;
+            animation: badgePulse 2s infinite ease-in-out;
+        }
+        
+        .status-open {
+            background-color: #e6f7ff;
+            color: #1890ff;
+            border: 1px solid #91d5ff;
+        }
+
+        .status-upcoming {
+            background-color: #feffe6;
+            color: #d4b106;
+            border: 1px solid #fffb8f;
+        }
+
+        .status-closed {
+            background-color: #fff1f0;
+            color: #f5222d;
+            border: 1px solid #ffa39e;
+        }
+
+        .calc-result-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .calc-result-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px dashed #ede8e0;
+            padding-bottom: 8px;
+            transition: var(--transition-smooth);
+        }
+
+        .calc-result-item:hover {
+            border-bottom-color: var(--primary-color);
+            padding-left: 4px;
+        }
+
+        .calc-result-item:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .calc-result-item:last-child:hover {
+            padding-left: 4px;
+        }
+
+        .calc-label {
+            font-weight: bold;
+            color: #7c726e;
+            font-size: 0.95rem;
+        }
+
+        .calc-date {
+            font-weight: bold;
+            color: var(--primary-color);
+            font-size: 1.1rem;
+            text-align: right;
+        }
+
+        .current-date-banner {
+            font-size: 0.9rem;
+            color: #7c726e;
+            text-align: right;
+            margin-bottom: 10px;
+            font-style: italic;
+        }
+
+        .cancel-section {
+            background-color: #f0f4ee;
+            border: 1px solid #d2ded1;
+            border-radius: 12px;
+            padding: 25px;
+            margin-top: 20px;
+            transition: var(--transition-smooth);
+        }
+
+        .cancel-section:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(93, 122, 70, 0.1);
+        }
+
+        .cancel-section h3 {
+            color: var(--accent-color);
+            margin-bottom: 12px;
+            font-size: 1.25rem;
+        }
+
+        .sub-timeline-container {
+            margin-top: 25px;
+            background-color: #fcfbfa;
+            border: 1px solid #eaddcf;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: inset 0 2px 6px rgba(0,0,0,0.01);
+        }
+
+        .sub-timeline-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            margin-bottom: 30px;
+            padding: 0 10px;
+        }
+
+        .sub-timeline-line {
+            position: absolute;
+            top: 20px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background-color: var(--gray);
+            z-index: 1;
+        }
+
+        .sub-timeline-progress {
+            position: absolute;
+            top: 20px;
+            left: 0;
+            width: 0%;
+            height: 3px;
+            background-color: var(--accent-color);
+            z-index: 1;
+            transition: width 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), height 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        /* 子節點呼吸光暈 */
+        @keyframes subActivePulse {
+            0% { box-shadow: 0 0 0 0 rgba(93, 122, 70, 0.4); }
+            70% { box-shadow: 0 0 0 8px rgba(93, 122, 70, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(93, 122, 70, 0); }
+        }
+
+        .sub-timeline-node {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            cursor: pointer;
+            z-index: 2;
+            flex: 1;
+        }
+
+        .sub-circle {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--white);
+            border: 3px solid var(--gray);
+            color: var(--text-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1rem;
+            font-weight: bold;
+            transition: var(--transition-smooth);
+            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+        }
+
+        .sub-node-title {
+            margin-top: 8px;
+            font-size: 0.85rem;
+            font-weight: bold;
+            color: #7c726e;
+            transition: var(--transition-smooth);
+        }
+
+        .sub-timeline-node:not(.active):hover .sub-circle {
+            transform: scale(1.1);
+            border-color: #b5aba4;
+        }
+
+        .sub-timeline-node.active .sub-circle {
+            background-color: var(--accent-color);
+            border-color: var(--accent-color);
+            color: var(--white);
+            transform: scale(1.15);
+            animation: subActivePulse 2s infinite;
+        }
+
+        .sub-timeline-node.active .sub-node-title {
+            color: var(--accent-color);
+        }
+
+        .sub3-content-panel {
+            display: none;
+            animation: panelSlideIn 0.4s cubic-bezier(0.25, 1, 0.5, 1) both;
+            padding: 15px 5px 5px 5px;
+            border-top: 1px dashed var(--gray);
+        }
+
+        .sub3-content-panel.active {
+            display: block;
+        }
+
+        .info-tabs-container {
+            margin-top: 25px;
+            background-color: #fbf9f6;
+            border: 1px solid #eaddcf;
+            border-radius: 12px;
+            padding: 25px;
+        }
+
+        .info-tabs {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .info-tab-btn {
+            background-color: var(--white);
+            border: 1.5px solid #dcd5ca;
+            border-radius: 10px;
+            padding: 15px 10px;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            transition: var(--transition-smooth);
+            box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+        }
+
+        .info-tab-btn:hover {
+            border-color: var(--accent-color);
+            background-color: #f4f7f2;
+            transform: translateY(-4px);
+            box-shadow: 0 6px 12px rgba(93, 122, 70, 0.1);
+        }
+
+        .info-tab-btn:active {
+            transform: translateY(-1px);
+        }
+
+        .info-tab-btn.active {
+            border-color: var(--accent-color);
+            background-color: var(--accent-color);
+            color: var(--white);
+            box-shadow: var(--shadow-lg);
+            transform: translateY(-3px);
+        }
+
+        .tab-btn-icon {
+            font-size: 1.5rem;
+            transition: transform 0.3s ease;
+        }
+
+        .info-tab-btn:hover .tab-btn-icon {
+            transform: scale(1.2) rotate(5deg);
+        }
+
+        .tab-btn-text {
+            font-weight: bold;
+            font-size: 0.95rem;
+            color: var(--text-color);
+            transition: var(--transition-smooth);
+        }
+
+        .info-tab-btn.active .tab-btn-text {
+            color: var(--white);
+        }
+
+        .sub4-content-panel {
+            display: none;
+            animation: panelSlideIn 0.4s cubic-bezier(0.25, 1, 0.5, 1) both;
+            padding: 15px 5px 5px 5px;
+            border-top: 1px dashed var(--gray);
+        }
+
+        .sub4-content-panel.active {
+            display: block;
+        }
+
+        @media (max-width: 768px) {
+            .timeline-nav {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 20px;
+                padding-left: 30px;
+            }
+            .timeline-line {
+                left: 63px;
+                top: 0;
+                width: 4px;
+                height: 100%;
+            }
+            .timeline-progress {
+                left: 63px;
+                top: 0;
+                width: 4px;
+                height: 0%;
+            }
+            .timeline-node {
+                flex-direction: row;
+                text-align: left;
+                gap: 20px;
+                width: 100%;
+            }
+            .circle {
+                width: 50px;
+                height: 50px;
+                font-size: 1.1rem;
+            }
+            .node-title {
+                margin-top: 0;
+            }
+
+            .sub-timeline-nav {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+                padding-left: 20px;
+            }
+            .sub-timeline-line {
+                left: 38px;
+                top: 0;
+                width: 3px;
+                height: 100%;
+            }
+            .sub-timeline-progress {
+                left: 38px;
+                top: 0;
+                width: 3px;
+                height: 0%;
+            }
+            .sub-timeline-node {
+                flex-direction: row;
+                text-align: left;
+                gap: 15px;
+                width: 100%;
+            }
+            .sub-circle {
+                width: 35px;
+                height: 35px;
+                font-size: 0.95rem;
+            }
+            .sub-node-title {
+                margin-top: 0;
+            }
+
+            .info-tabs {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+            .info-tab-btn {
+                flex-direction: row;
+                justify-content: center;
+                gap: 12px;
+                padding: 12px;
+            }
+
+            .calc-tabs {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+            .calc-result-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 4px;
+            }
+            .calc-date {
+                text-align: left;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>教育實習申請流程</h1>
+    
+    <div class="timeline-nav">
+        <div class="timeline-line"></div>
+        <div class="timeline-progress" id="progressLine"></div>
+        
+        <div class="timeline-node active" onclick="switchStep(0)">
+            <div class="circle">一</div>
+            <div class="node-title">申請時程</div>
+        </div>
+        <div class="timeline-node" onclick="switchStep(1)">
+            <div class="circle">二</div>
+            <div class="node-title">申請方式</div>
+        </div>
+        <div class="timeline-node" onclick="switchStep(2)">
+            <div class="circle">三</div>
+            <div class="node-title">選擇教育實習機構</div>
+        </div>
+        <div class="timeline-node" onclick="switchStep(3)">
+            <div class="circle">四</div>
+            <div class="node-title">教育實習前學習服務</div>
+        </div>
+        <div class="timeline-node" onclick="switchStep(4)">
+            <div class="circle">五</div>
+            <div class="node-title">參加教育實習 ↗</div>
+        </div>
+    </div>
+    
+    <div class="content-container">
+        
+        <!-- 步驟一：申請時程 -->
+        <div class="content-panel active">
+            <h2>一、申請時程</h2>
+
+            <div class="calc-widget">
+                <div class="current-date-banner" id="currentDateBanner">今日日期：載入中...</div>
+                
+                <div class="calc-tabs">
+                    <div class="calc-tab active" id="tabSem1" onclick="switchCalcTab(1)">
+                        <div class="tab-year">...學年度</div>
+                        <div class="tab-title">第 1 學期實習 (8月開始)</div>
+                    </div>
+                    <div class="calc-tab" id="tabSem2" onclick="switchCalcTab(2)">
+                        <div class="tab-year">...學年度</div>
+                        <div class="tab-title">第 2 學期實習 (2月開始)</div>
+                    </div>
+                </div>
+
+                <div class="calc-result">
+                    <div class="calc-result-header">
+                        <h4 id="resultTitle">📊 最近可申請時段</h4>
+                        <span class="status-badge status-open" id="statusBadge">開放申請中！</span>
+                    </div>
+                    <ul class="calc-result-list">
+                        <li class="calc-result-item">
+                            <span class="calc-label">🏫 預計教育實習時間：</span>
+                            <span class="calc-date" id="dateIntern">載入中...</span>
+                        </li>
+                        <li class="calc-result-item">
+                            <span class="calc-label">⏰ 申請起訖時段：</span>
+                            <span class="calc-date" id="dateRange">載入中...</span>
+                        </li>
+                        <li class="calc-result-item">
+                            <span class="calc-label">📝 學習服務紀錄表上傳截止：</span>
+                            <span class="calc-date" id="dateService">載入中...</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 步驟二：申請方式 -->
+        <div class="content-panel">
+            <h2>二、申請方式</h2>
+            <p>至本校「<a href="http://aps.ncue.edu.tw/practice/" target="_blank">教育實習管理系統</a>」提出申請，並於系統中直接列印【實習申請書】，</p>
+            
+            <div class="alert-box">
+                <div class="alert-title">注意事項：</div>
+                <div class="indent-1">1.請務必於系統中直接列印，勿下載後再列印，以避免文件缺字。</div>
+                <div class="indent-1">2.申請案件約需 3 個工作天審查，請儘早提出申請，以免影響後續作業。</div>
+            </div>
+        </div>
+        
+        <!-- 步驟三：選擇教育實習機構 -->
+        <div class="content-panel">
+            <h2>三、選擇教育實習機構</h2>
+            
+            <div class="sub-timeline-container">
+                <div class="sub-timeline-nav">
+                    <div class="sub-timeline-line"></div>
+                    <div class="sub-timeline-progress" id="sub3ProgressLine"></div>
+                    
+                    <div class="sub-timeline-node active sub3-node" onclick="switchSubStep3(0)">
+                        <div class="sub-circle">1</div>
+                        <div class="sub-node-title">確認適合</div>
+                    </div>
+                    <div class="sub-timeline-node sub3-node" onclick="switchSubStep3(1)">
+                        <div class="sub-circle">2</div>
+                        <div class="sub-node-title">洽詢意願</div>
+                    </div>
+                    <div class="sub-timeline-node sub3-node" onclick="switchSubStep3(2)">
+                        <div class="sub-circle">3</div>
+                        <div class="sub-node-title">簽核與上傳</div>
+                    </div>
+                </div>
+
+                <!-- 子流程 1 內容 -->
+                <div class="sub3-content-panel active">
+                    <div style="font-weight: bold; color: var(--accent-color); margin-bottom: 15px;">1.確認教育實習機構是否適合，步驟請參考說明。</div>
+                    <div class="indent-1">(1)以預計實習年度登錄教育部之「<a href="https://eii.ncue.edu.tw/?_gl=1*u1nrl2*_ga*MTc3NzcyMTc2Mi4xNzg0NTE2NDg4*_ga_JDDYXS6J5R*czE3ODQ1MzI0MzYkajYwJGwwJGgxMDQ5OTIwNzcz" target="_blank">全國教育實習資訊平臺</a>」。</div>
+                    <div class="indent-1">(2)首頁點選【尋找教育實習學校】(淡藍色圓圈)，輸入該校校名。</div>
+                    <div class="indent-1">(3)確認該校經主管機關認定為【適合】或是【可考量】之教育實習機構。</div>
+                    
+                    <div class="indent-1" style="margin-top: 15px;">
+                        <div style="background-color: #eaf3ff; padding: 12px 15px; border-radius: 8px; border-left: 4px solid #1877F2; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
+                            <span style="font-size: 1.2rem; margin-right: 5px; vertical-align: middle;">📘</span>
+                            <span style="font-weight: bold; color: #1877F2;">圖文操作教學：</span>
+                            詳細系統畫面與步驟，請參考 <a href="https://www.facebook.com/ncuepractice/posts/3612520888790942" target="_blank" style="color: #1877F2; text-decoration: underline;">實習生粉絲團貼文說明</a>。
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 子流程 2 內容 -->
+                <div class="sub3-content-panel">
+                    <div style="font-weight: bold; color: var(--accent-color); margin-bottom: 15px;">2.洽詢教育實習機構是否具備輔導實習學生之意願：</div>
+                    <div class="indent-1">(1)實習學生自我介紹(說明畢業學校以及系所，是否為該校校友)。</div>
+                    <div class="indent-1">(2)表達想去該校實習之理由(學習環境、師資以及學生素質優異等)。</div>
+                    <div class="indent-1">(3)洽詢方便到校簽核【實習申請書】之時間。</div>
+                </div>
+
+                <!-- 子流程 3 內容 -->
+                <div class="sub3-content-panel">
+                    <div style="font-weight: bold; color: var(--accent-color); margin-bottom: 15px;">3.實習申請書之簽核與上傳：</div>
+                    <div class="indent-1">(1)備妥【實習申請書】(共兩聯)，於事前談妥之時間至教育實習機構拜訪。</div>
+                    <div class="indent-1">(2)請校長及教務主任於【實習申請書】核章。</div>
+                    <div class="indent-1">(3)【實習申請書】留存：</div>
+                    <div class="indent-2">第一聯由教育實習機構留存。</div>
+                    <div class="indent-2">第二聯由學生上傳至「<a href="http://aps.ncue.edu.tw/practice/" target="_blank">教育實習管理系統</a>」後自行留存。</div>
+                    <div class="indent-1">(4)【實習申請書】上傳期限：</div>
+                    <div class="indent-2">參加第1學期實習者，請於3月31日前完成上傳。</div>
+                    <div class="indent-2">參加第2學期實習者，請於10月31日前完成上傳。</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 步驟四：教育實習前學習服務 -->
+        <div class="content-panel">
+            <h2>四、教育實習前學習服務</h2>
+            <p>師資生於教育實習前，應至教育現場參與學習服務工作至少三至五日，每次以全/半日為單位。</p>
+            <p>完成後請下載並填寫(含簽核)「<a href="https://practiceweb.ncue.edu.tw/var/file/7/1007/img/37/737768772.pdf" target="_blank">師資生學習服務紀錄表</a>」。</p>
+            
+            <div class="info-tabs-container">
+                <div class="info-tabs">
+                    <div class="info-tab-btn active" onclick="switchCategory4(0)" id="tabBtn0">
+                        <span class="tab-btn-icon">📋</span>
+                        <span class="tab-btn-text">學習服務內容</span>
+                    </div>
+                    <div class="info-tab-btn" onclick="switchCategory4(1)" id="tabBtn1">
+                        <span class="tab-btn-icon">🤝</span>
+                        <span class="tab-btn-text">參與方式</span>
+                    </div>
+                    <div class="info-tab-btn" onclick="switchCategory4(2)" id="tabBtn2">
+                        <span class="tab-btn-icon">⏰</span>
+                        <span class="tab-btn-text">上傳期限</span>
+                    </div>
+                </div>
+
+                <div class="sub4-content-panel active">
+                    <div style="font-weight: bold; color: var(--accent-color); margin-bottom: 15px;">學習服務內容</div>
+                    <div class="indent-1">(1)行政服務：至學校各處室協助行政工作。</div>
+                    <div class="indent-1">(2)教學學習：至班級進行觀課、議課或參與教學活動。</div>
+                </div>
+
+                <div class="sub4-content-panel">
+                    <div style="font-weight: bold; color: var(--accent-color); margin-bottom: 15px;">參與方式</div>
+                    <div class="indent-1">(1)獨自前往：持【實習申請書】至教育實習機構核章時，可一併與學校約定學習服務日期。</div>
+                    <div class="indent-1">(2)團隊前往：透過教學實習課程或教學服務營隊(如史懷哲教育服務計畫、白沙夏日學校、白沙x共好計畫等)。</div>
+                </div>
+
+                <div class="sub4-content-panel">
+                    <div style="font-weight: bold; color: var(--accent-color); margin-bottom: 15px;">上傳期限</div>
+                    <div>請於參加教育實習前2週將「<a href="https://practiceweb.ncue.edu.tw/var/file/7/1007/img/37/737768772.pdf" target="_blank">師資生學習服務紀錄表</a>」拍照上傳至「<a href="http://aps.ncue.edu.tw/practice/" target="_blank">教育實習管理系統</a>」，正本請自行妥善保存。</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 步驟五：參加教育實習 (點擊跳轉與備用引導) -->
+        <div class="content-panel">
+            <h2>五、參加教育實習</h2>
+            <div style="text-align: center; padding: 40px 20px;">
+                <div style="font-size: 3rem; margin-bottom: 20px; animation: badgePulse 2s infinite ease-in-out;">🚀</div>
+                <h3 style="color: var(--primary-color); margin-bottom: 15px; font-size: 1.5rem; font-weight: bold;">即將帶您前往「實習學生與指導教授名冊暨實習重要須知」...</h3>
+                <p style="margin-bottom: 25px; color: #7c726e; font-size: 1.05rem;">
+                    系統已自動在新視窗為您開啟該頁面。<br>
+                    若您的瀏覽器封鎖了自動彈出視窗，請點擊下方按鈕直接前往：
+                </p>
+                <div style="margin-top: 20px;">
+                    <a href="https://practiceweb.ncue.edu.tw/p/412-1007-4267.php?Lang=zh-tw" target="_blank" style="display: inline-flex; justify-content: center; align-items: center; text-decoration: none; padding: 15px 35px; border-radius: 30px; font-weight: bold; font-size: 1.1rem; background-color: var(--primary-color); color: var(--white); box-shadow: var(--shadow-lg); transition: var(--transition-smooth);" onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 15px 35px rgba(166,63,56,0.25)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='var(--shadow-lg)';">
+                        直接前往「實習學生與指導教授名冊暨實習重要須知」 ↗
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+
+    <!-- 撤銷區塊 -->
+    <div class="cancel-section">
+        <h3>撤銷或終止教育實習</h3>
+        <div>如欲撤銷或終止教育實習，請下載以下表單，並依規定辦理相關程序。</div>
+        <div style="font-weight: bold; margin-top: 5px;">
+            <a href="https://practiceweb.ncue.edu.tw/var/file/7/1007/img/37/328367654.odt" target="_blank">實習學生撤銷／終止教育實習申請書及退還實習輔導費申請表</a>
+        </div>
+    </div>
+</div>
+
+<script>
+    const nodes = document.querySelectorAll('.timeline-node');
+    const panels = document.querySelectorAll('.content-panel');
+    const progressLine = document.getElementById('progressLine');
+
+    const sub3Nodes = Array.from(document.querySelectorAll('.sub3-node'));
+    const sub3Panels = document.querySelectorAll('.sub3-content-panel');
+    const sub3ProgressLine = document.getElementById('sub3ProgressLine');
+
+    const sub4Panels = document.querySelectorAll('.sub4-content-panel');
+
+    function switchStep(index) {
+        nodes.forEach((node, idx) => {
+            if (node) {
+                if (idx <= index) {
+                    node.classList.add('active');
+                } else {
+                    node.classList.remove('active');
+                }
+            }
+        });
+
+        panels.forEach((panel, idx) => {
+            if (panel) {
+                if (idx === index) {
+                    panel.classList.add('active');
+                } else {
+                    panel.classList.remove('active');
+                }
+            }
+        });
+
+        const isMobile = window.innerWidth <= 768;
+        const progressPercent = (index / (nodes.length - 1)) * 100;
+        
+        if (progressLine) {
+            if (!isMobile) {
+                progressLine.style.width = progressPercent + '%';
+                progressLine.style.height = '4px';
+            } else {
+                progressLine.style.height = progressPercent + '%';
+                progressLine.style.width = '4px';
+            }
+        }
+
+        if (index === 2) {
+            switchSubStep3(0);
+        }
+        if (index === 3) {
+            switchCategory4(0);
+        }
+        
+        // 當使用者點選第五個步驟（參加教育實習）時，立即自動開起指定頁面
+        if (index === 4) {
+            window.open('https://practiceweb.ncue.edu.tw/p/412-1007-4267.php?Lang=zh-tw', '_blank');
+        }
+    }
+
+    function switchSubStep3(sub3Index) {
+        if (sub3Nodes.length === 0) return;
+
+        sub3Nodes.forEach((node, idx) => {
+            if (node) {
+                if (idx <= sub3Index) {
+                    node.classList.add('active');
+                } else {
+                    node.classList.remove('active');
+                }
+            }
+        });
+
+        sub3Panels.forEach((panel, idx) => {
+            if (panel) {
+                if (idx === sub3Index) {
+                    panel.classList.add('active');
+                } else {
+                    panel.classList.remove('active');
+                }
+            }
+        });
+
+        const isMobile = window.innerWidth <= 768;
+        const sub3ProgressPercent = (sub3Index / (sub3Nodes.length - 1)) * 100;
+
+        if (sub3ProgressLine) {
+            if (!isMobile) {
+                sub3ProgressLine.style.width = sub3ProgressPercent + '%';
+                sub3ProgressLine.style.height = '3px';
+            } else {
+                sub3ProgressLine.style.height = sub3ProgressPercent + '%';
+                sub3ProgressLine.style.width = '3px';
+            }
+        }
+    }
+
+    function switchCategory4(categoryIndex) {
+        for (let i = 0; i < 3; i++) {
+            const btn = document.getElementById(`tabBtn${i}`);
+            if (btn) {
+                if (i === categoryIndex) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            }
+        }
+
+        sub4Panels.forEach((panel, idx) => {
+            if (panel) {
+                if (idx === categoryIndex) {
+                    panel.classList.add('active');
+                } else {
+                    panel.classList.remove('active');
+                }
+            }
+        });
+    }
+
+    let activeSemTab = 1;
+
+    function updateCurrentDateBanner() {
+        const today = new Date();
+        const currentYear = today.getFullYear();
+        const minguoYear = currentYear - 1911;
+        const currentMonth = today.getMonth() + 1;
+        const currentDate = today.getDate();
+        
+        const banner = document.getElementById('currentDateBanner');
+        if (banner) {
+            banner.innerText = `今日日期：${minguoYear} 年 ${currentMonth} 月 ${currentDate} 日`;
+        }
+    }
+
+    function initTabs() {
+        const today = new Date();
+        const currentYear = today.getFullYear();
+        const minguoCurrentYear = currentYear - 1911;
+
+        let sem1AcYear;
+        const endOfCycle1 = new Date(currentYear, 2, 31);
+        if (today <= endOfCycle1) {
+            sem1AcYear = minguoCurrentYear;
+        } else {
+            sem1AcYear = minguoCurrentYear + 1;
+        }
+
+        let sem2AcYear;
+        const endOfCycle2 = new Date(currentYear, 9, 31);
+        if (today <= endOfCycle2) {
+            sem2AcYear = minguoCurrentYear; 
+        } else {
+            sem2AcYear = minguoCurrentYear + 1; 
+        }
+
+        const tab1 = document.getElementById('tabSem1');
+        const tab2 = document.getElementById('tabSem2');
+        
+        if (tab1) {
+            tab1.innerHTML = `
+                <div class="tab-year">${sem1AcYear} 學年度</div>
+                <div class="tab-title">第 1 學期實習 (8月開始)</div>
+            `;
+        }
+        if (tab2) {
+            tab2.innerHTML = `
+                <div class="tab-year">${sem2AcYear} 學年度</div>
+                <div class="tab-title">第 2 學期實習 (2月開始)</div>
+            `;
+        }
+    }
+
+    function switchCalcTab(sem) {
+        activeSemTab = sem;
+        
+        const tab1 = document.getElementById('tabSem1');
+        const tab2 = document.getElementById('tabSem2');
+        if (sem === 1) {
+            tab1.classList.add('active');
+            tab2.classList.remove('active');
+        } else {
+            tab1.classList.remove('active');
+            tab2.classList.add('active');
+        }
+
+        calculateSmartTimeline();
+    }
+
+    function calculateSmartTimeline() {
+        const today = new Date();
+        const currentYear = today.getFullYear();
+        const minguoCurrentYear = currentYear - 1911;
+
+        let targetInternshipYear;
+        let startAppYear, startAppMonth = 8, startAppDay = 1;
+        let endAppYear, endAppMonth, endAppDay;
+        let internYear, internMonth, internDay;
+        let serviceLimitYear, serviceLimitMonth, serviceLimitDay;
+        let academicYear;
+
+        if (activeSemTab === 1) {
+            const endOfCurrentCycleApp = new Date(currentYear, 2, 31);
+            if (today <= endOfCurrentCycleApp) {
+                targetInternshipYear = minguoCurrentYear;
+            } else {
+                targetInternshipYear = minguoCurrentYear + 1;
+            }
+
+            academicYear = targetInternshipYear;
+            internYear = targetInternshipYear;
+            internMonth = 8;
+            internDay = 1;
+
+            startAppYear = targetInternshipYear - 1;
+            endAppYear = targetInternshipYear;
+            endAppMonth = 3;
+            endAppDay = 31;
+
+            serviceLimitYear = targetInternshipYear;
+            serviceLimitMonth = 7;
+            serviceLimitDay = 18;
+        } else {
+            const endOfCurrentCycleApp = new Date(currentYear, 9, 31);
+            if (today <= endOfCurrentCycleApp) {
+                targetInternshipYear = minguoCurrentYear + 1;
+            } else {
+                targetInternshipYear = minguoCurrentYear + 2;
+            }
+
+            academicYear = targetInternshipYear - 1;
+            internYear = targetInternshipYear;
+            internMonth = 2;
+            internDay = 1;
+
+            startAppYear = targetInternshipYear - 1;
+            endAppYear = targetInternshipYear - 1;
+            endAppMonth = 10;
+            endAppDay = 31;
+
+            serviceLimitYear = targetInternshipYear;
+            serviceLimitMonth = 1;
+            serviceLimitDay = 18; 
+        }
+
+        let status = "";
+        let statusClass = "status-open";
+        const startDate = new Date(startAppYear + 1911, startAppMonth - 1, startAppDay);
+        const endDate = new Date(endAppYear + 1911, endAppMonth - 1, endAppDay);
+
+        if (today < startDate) {
+            status = "尚未開放";
+            statusClass = "status-upcoming";
+        } else if (today >= startDate && today <= endDate) {
+            status = "開放申請中！";
+            statusClass = "status-open";
+        } else {
+            status = "本學期已截止";
+            statusClass = "status-closed";
+        }
+
+        document.getElementById('resultTitle').innerText = `📊 最近可申請時段`;
+        
+        const badge = document.getElementById('statusBadge');
+        badge.innerText = status;
+        badge.className = `status-badge ${statusClass}`;
+
+        document.getElementById('dateIntern').innerText = `${academicYear} 學年度第 ${activeSemTab} 學期 (${internYear} 年 ${internMonth} 月 ${internDay} 日起)`;
+        document.getElementById('dateRange').innerText = `${startAppYear} 年 ${startAppMonth} 月 ${startAppDay} 日 至 ${endAppYear} 年 ${endAppMonth} 月 ${endAppDay} 日`;
+        document.getElementById('dateService').innerText = `實習前2週 (約 ${serviceLimitYear} 年 ${serviceLimitMonth} 月 ${serviceLimitDay} 日 前)`;
+    }
+
+    window.addEventListener('resize', () => {
+        const activeNode = Array.from(nodes).filter(n => n && n.classList.contains('active'));
+        const activeNodeIndex = activeNode.length > 0 ? activeNode.length - 1 : 0;
+        switchStep(activeNodeIndex);
+
+        const activeSub3 = sub3Nodes.filter(n => n && n.classList.contains('active'));
+        const activeSub3Index = activeSub3.length > 0 ? activeSub3.length - 1 : 0;
+        switchSubStep3(activeSub3Index);
+    });
+
+    window.onload = function() {
+        // 初始化為第一個主要步驟
+        switchStep(0);
+        switchSubStep3(0);
+        switchCategory4(0);
+        
+        updateCurrentDateBanner();
+        initTabs();
+        calculateSmartTimeline();
+    };
+</script>
+
+</body>
+</html>
