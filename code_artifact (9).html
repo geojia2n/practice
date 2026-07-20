@@ -1,0 +1,1042 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>教育實習申請流程</title>
+    <style>
+        :root {
+            --primary-color: #a63f38;   /* 圖片中的深紅色 */
+            --accent-color: #5d7a46;    /* 圖片中的樹木綠色 */
+            --bg-color: #fcf6ee;        /* 圖片中的暖米色背景 */
+            --text-color: #33221c;      /* 深咖啡色文字 */
+            --white: #ffffff;
+            --gray: #e0dcd5;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: "Helvetica Neue", Helvetica, Arial, "Microsoft JhengHei", 微軟正黑體, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background-color: var(--white);
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 8px 24px rgba(166, 63, 56, 0.08);
+        }
+
+        h1 {
+            text-align: center;
+            color: var(--primary-color);
+            margin-bottom: 40px;
+            font-size: 2rem;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        h1::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background-color: var(--accent-color);
+            border-radius: 2px;
+        }
+
+        a {
+            color: var(--primary-color);
+            text-decoration: underline;
+            font-weight: bold;
+            transition: color 0.2s ease;
+        }
+        
+        a:hover {
+            color: var(--accent-color);
+        }
+
+        .timeline-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            margin-bottom: 40px;
+            padding: 0 10px;
+        }
+
+        .timeline-line {
+            position: absolute;
+            top: 35px;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background-color: var(--gray);
+            z-index: 1;
+        }
+
+        .timeline-progress {
+            position: absolute;
+            top: 35px;
+            left: 0;
+            width: 0%;
+            height: 4px;
+            background-color: var(--primary-color);
+            z-index: 1;
+            transition: width 0.4s ease;
+        }
+
+        .timeline-node {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            cursor: pointer;
+            z-index: 2;
+            flex: 1;
+        }
+
+        .circle {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background-color: var(--white);
+            border: 4px solid var(--gray);
+            color: var(--text-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.4rem;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
+
+        .node-title {
+            margin-top: 10px;
+            font-size: 0.95rem;
+            font-weight: bold;
+            color: #7c726e;
+            transition: color 0.3s ease;
+        }
+
+        .timeline-node.active .circle {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+            color: var(--white);
+            transform: scale(1.1);
+            box-shadow: 0 6px 15px rgba(166, 63, 56, 0.3);
+        }
+
+        .timeline-node.active .node-title {
+            color: var(--primary-color);
+        }
+
+        .content-container {
+            background-color: #faf7f2;
+            border-left: 5px solid var(--primary-color);
+            border-radius: 0 12px 12px 0;
+            padding: 30px;
+            min-height: 250px;
+            margin-bottom: 40px;
+        }
+
+        .content-panel {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .content-panel.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h2 {
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            font-size: 1.4rem;
+            border-bottom: 1px dashed var(--gray);
+            padding-bottom: 10px;
+        }
+
+        p, div {
+            margin-bottom: 12px;
+            font-size: 1.05rem;
+        }
+
+        .indent-1 { padding-left: 20px; }
+        .indent-2 { padding-left: 40px; }
+        
+        .alert-box {
+            background-color: #fff1f0;
+            border: 1px solid #ffa39e;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+        }
+
+        .alert-title {
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: 5px;
+        }
+
+        .calc-widget {
+            background-color: #f5ece1;
+            border: 2px solid var(--primary-color);
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 4px 15px rgba(166, 63, 56, 0.05);
+            margin-top: 10px;
+        }
+
+        .calc-tabs {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .calc-tab {
+            padding: 15px;
+            border-radius: 10px;
+            border: 2px solid #c9bdae;
+            background-color: var(--white);
+            color: var(--text-color);
+            font-weight: bold;
+            font-size: 1.05rem;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+        }
+
+        .calc-tab:hover {
+            border-color: var(--primary-color);
+            background-color: #faf7f2;
+        }
+
+        .calc-tab.active {
+            border-color: var(--primary-color);
+            background-color: var(--primary-color);
+            color: var(--white);
+            box-shadow: 0 4px 12px rgba(166, 63, 56, 0.2);
+        }
+
+        .calc-result {
+            background-color: var(--white);
+            border-radius: 8px;
+            padding: 20px;
+            border-left: 4px solid var(--accent-color);
+            animation: fadeIn 0.4s ease;
+        }
+
+        .calc-result-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            border-bottom: 1px dashed #ede8e0;
+            padding-bottom: 15px;
+            margin-bottom: 15px;
+        }
+
+        .calc-result h4 {
+            font-size: 1.15rem;
+            color: var(--accent-color);
+            font-weight: bold;
+            margin: 0;
+        }
+
+        .status-badge {
+            font-size: 0.85rem;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-weight: bold;
+        }
+        
+        .status-open {
+            background-color: #e6f7ff;
+            color: #1890ff;
+            border: 1px solid #91d5ff;
+        }
+
+        .status-upcoming {
+            background-color: #feffe6;
+            color: #d4b106;
+            border: 1px solid #fffb8f;
+        }
+
+        .status-closed {
+            background-color: #fff1f0;
+            color: #f5222d;
+            border: 1px solid #ffa39e;
+        }
+
+        .calc-result-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .calc-result-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px dashed #ede8e0;
+            padding-bottom: 8px;
+        }
+
+        .calc-result-item:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .calc-label {
+            font-weight: bold;
+            color: #7c726e;
+            font-size: 0.95rem;
+        }
+
+        .calc-date {
+            font-weight: bold;
+            color: var(--primary-color);
+            font-size: 1.1rem;
+            text-align: right;
+        }
+
+        .current-date-banner {
+            font-size: 0.9rem;
+            color: #7c726e;
+            text-align: right;
+            margin-bottom: 10px;
+            font-style: italic;
+        }
+
+        .cancel-section {
+            background-color: #f0f4ee;
+            border: 1px solid #d2ded1;
+            border-radius: 12px;
+            padding: 25px;
+            margin-top: 20px;
+        }
+
+        .cancel-section h3 {
+            color: var(--accent-color);
+            margin-bottom: 12px;
+            font-size: 1.25rem;
+        }
+
+        .sub-timeline-container {
+            margin-top: 25px;
+            background-color: #fcfbfa;
+            border: 1px solid #eaddcf;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: inset 0 2px 6px rgba(0,0,0,0.01);
+        }
+
+        .sub-timeline-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            margin-bottom: 30px;
+            padding: 0 10px;
+        }
+
+        .sub-timeline-line {
+            position: absolute;
+            top: 20px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background-color: var(--gray);
+            z-index: 1;
+        }
+
+        .sub-timeline-progress {
+            position: absolute;
+            top: 20px;
+            left: 0;
+            width: 0%;
+            height: 3px;
+            background-color: var(--accent-color);
+            z-index: 1;
+            transition: width 0.4s ease;
+        }
+
+        .sub-timeline-node {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            cursor: pointer;
+            z-index: 2;
+            flex: 1;
+        }
+
+        .sub-circle {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--white);
+            border: 3px solid var(--gray);
+            color: var(--text-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1rem;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+        }
+
+        .sub-node-title {
+            margin-top: 8px;
+            font-size: 0.85rem;
+            font-weight: bold;
+            color: #7c726e;
+            transition: color 0.3s ease;
+        }
+
+        .sub-timeline-node.active .sub-circle {
+            background-color: var(--accent-color);
+            border-color: var(--accent-color);
+            color: var(--white);
+            transform: scale(1.1);
+            box-shadow: 0 4px 10px rgba(93, 122, 70, 0.3);
+        }
+
+        .sub-timeline-node.active .sub-node-title {
+            color: var(--accent-color);
+        }
+
+        .sub3-content-panel {
+            display: none;
+            animation: fadeIn 0.4s ease;
+            padding: 15px 5px 5px 5px;
+            border-top: 1px dashed var(--gray);
+        }
+
+        .sub3-content-panel.active {
+            display: block;
+        }
+
+        .info-tabs-container {
+            margin-top: 25px;
+            background-color: #fbf9f6;
+            border: 1px solid #eaddcf;
+            border-radius: 12px;
+            padding: 25px;
+        }
+
+        .info-tabs {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .info-tab-btn {
+            background-color: var(--white);
+            border: 1.5px solid #dcd5ca;
+            border-radius: 10px;
+            padding: 15px 10px;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+        }
+
+        .info-tab-btn:hover {
+            border-color: var(--accent-color);
+            background-color: #f4f7f2;
+            transform: translateY(-2px);
+        }
+
+        .info-tab-btn.active {
+            border-color: var(--accent-color);
+            background-color: var(--accent-color);
+            color: var(--white);
+            box-shadow: 0 4px 12px rgba(93, 122, 70, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .tab-btn-icon {
+            font-size: 1.5rem;
+        }
+
+        .tab-btn-text {
+            font-weight: bold;
+            font-size: 0.95rem;
+            color: var(--text-color);
+        }
+
+        .info-tab-btn.active .tab-btn-text {
+            color: var(--white);
+        }
+
+        .sub4-content-panel {
+            display: none;
+            animation: fadeIn 0.4s ease;
+            padding: 15px 5px 5px 5px;
+            border-top: 1px dashed var(--gray);
+        }
+
+        .sub4-content-panel.active {
+            display: block;
+        }
+
+        @media (max-width: 768px) {
+            .timeline-nav {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 20px;
+                padding-left: 30px;
+            }
+            .timeline-line {
+                left: 63px;
+                top: 0;
+                width: 4px;
+                height: 100%;
+            }
+            .timeline-progress {
+                left: 63px;
+                top: 0;
+                width: 4px;
+                height: 0%;
+            }
+            .timeline-node {
+                flex-direction: row;
+                text-align: left;
+                gap: 20px;
+                width: 100%;
+            }
+            .circle {
+                width: 50px;
+                height: 50px;
+                font-size: 1.1rem;
+            }
+            .node-title {
+                margin-top: 0;
+            }
+
+            .sub-timeline-nav {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+                padding-left: 20px;
+            }
+            .sub-timeline-line {
+                left: 38px;
+                top: 0;
+                width: 3px;
+                height: 100%;
+            }
+            .sub-timeline-progress {
+                left: 38px;
+                top: 0;
+                width: 3px;
+                height: 0%;
+            }
+            .sub-timeline-node {
+                flex-direction: row;
+                text-align: left;
+                gap: 15px;
+                width: 100%;
+            }
+            .sub-circle {
+                width: 35px;
+                height: 35px;
+                font-size: 0.95rem;
+            }
+            .sub-node-title {
+                margin-top: 0;
+            }
+
+            .info-tabs {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+            .info-tab-btn {
+                flex-direction: row;
+                justify-content: center;
+                gap: 12px;
+                padding: 12px;
+            }
+
+            .calc-tabs {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+            .calc-result-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 4px;
+            }
+            .calc-date {
+                text-align: left;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>教育實習申請流程</h1>
+    
+    <div class="timeline-nav">
+        <div class="timeline-line"></div>
+        <div class="timeline-progress" id="progressLine"></div>
+        
+        <div class="timeline-node active" onclick="switchStep(0)">
+            <div class="circle">一</div>
+            <div class="node-title">申請時程</div>
+        </div>
+        <div class="timeline-node" onclick="switchStep(1)">
+            <div class="circle">二</div>
+            <div class="node-title">申請方式</div>
+        </div>
+        <div class="timeline-node" onclick="switchStep(2)">
+            <div class="circle">三</div>
+            <div class="node-title">選擇教育實習機構</div>
+        </div>
+        <div class="timeline-node" onclick="switchStep(3)">
+            <div class="circle">四</div>
+            <div class="node-title">教育實習前學習服務</div>
+        </div>
+    </div>
+    
+    <div class="content-container">
+        
+        <div class="content-panel active">
+            <h2>一、申請時程</h2>
+
+            <div class="calc-widget">
+                <div class="current-date-banner" id="currentDateBanner">今日日期：115 年 7 月 20 日</div>
+                
+                <div class="calc-tabs">
+                    <div class="calc-tab active" id="tabSem1" onclick="switchCalcTab(1)">
+                        第 1 學期實習 (8月開始)
+                    </div>
+                    <div class="calc-tab" id="tabSem2" onclick="switchCalcTab(2)">
+                        第 2 學期實習 (2月開始)
+                    </div>
+                </div>
+
+                <div class="calc-result">
+                    <div class="calc-result-header">
+                        <h4 id="resultTitle">📊 最近可申請時段</h4>
+                        <span class="status-badge status-open" id="statusBadge">開放申請中！</span>
+                    </div>
+                    <ul class="calc-result-list">
+                        <li class="calc-result-item">
+                            <span class="calc-label">🏫 預計教育實習時間：</span>
+                            <span class="calc-date" id="dateIntern">116 年 8 月 1 日</span>
+                        </li>
+                        <li class="calc-result-item">
+                            <span class="calc-label">⏰ 申請起訖時段：</span>
+                            <span class="calc-date" id="dateRange">115 年 8 月 1 日 至 116 年 3 月 31 日</span>
+                        </li>
+                        <li class="calc-result-item">
+                            <span class="calc-label">📝 學習服務紀錄表上傳截止：</span>
+                            <span class="calc-date" id="dateService">實習前2週 (約 116 年 7 月 18 日 前)</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <div class="content-panel">
+            <h2>二、申請方式</h2>
+            <p>至本校「<a href="http://aps.ncue.edu.tw/practice/" target="_blank">教育實習管理系統</a>」提出申請，並於系統中直接列印【實習申請書】，</p>
+            
+            <div class="alert-box">
+                <div class="alert-title">注意事項：</div>
+                <div class="indent-1">1.請務必於系統中直接列印，勿下載後再列印，以避免文件缺字。</div>
+                <div class="indent-1">2.申請案件約需 3 個工作天審查，請儘早提出申請，以免影響後續作業。</div>
+            </div>
+        </div>
+        
+        <div class="content-panel">
+            <h2>三、選擇教育實習機構</h2>
+            
+            <div class="sub-timeline-container">
+                <div class="sub-timeline-nav">
+                    <div class="sub-timeline-line"></div>
+                    <div class="sub-timeline-progress" id="sub3ProgressLine"></div>
+                    
+                    <div class="sub-timeline-node active sub3-node" onclick="switchSubStep3(0)">
+                        <div class="sub-circle">1</div>
+                        <div class="sub-node-title">確認適合</div>
+                    </div>
+                    <div class="sub-timeline-node sub3-node" onclick="switchSubStep3(1)">
+                        <div class="sub-circle">2</div>
+                        <div class="sub-node-title">洽詢意願</div>
+                    </div>
+                    <div class="sub-timeline-node sub3-node" onclick="switchSubStep3(2)">
+                        <div class="sub-circle">3</div>
+                        <div class="sub-node-title">簽核與上傳</div>
+                    </div>
+                </div>
+
+                <!-- 子流程 1 內容 -->
+                <div class="sub3-content-panel active">
+                    <div style="font-weight: bold; color: var(--accent-color); margin-bottom: 15px;">1.確認教育實習機構是否適合，步驟請參考說明。</div>
+                    <div class="indent-1">(1)以預計實習年度登錄教育部之「<a href="https://eii.ncue.edu.tw/?_gl=1*u1nrl2*_ga*MTc3NzcyMTc2Mi4xNzg0NTE2NDg4*_ga_JDDYXS6J5R*czE3ODQ1MzI0MzYkajYwJGwwJGgxMDQ5OTIwNzcz" target="_blank">全國教育實習資訊平臺</a>」。</div>
+                    <div class="indent-1">(2)首頁點選【尋找教育實習學校】(淡藍色圓圈)，輸入該校校名。</div>
+                    <div class="indent-1">(3)確認該校經主管機關認定為【適合】或是【可考量】之教育實習機構。</div>
+                    
+                    <!-- 💡 在此處新增 FB 貼文連結區塊 -->
+                    <div class="indent-1" style="margin-top: 15px;">
+                        <div style="background-color: #eaf3ff; padding: 12px 15px; border-radius: 8px; border-left: 4px solid #1877F2; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
+                            <span style="font-size: 1.2rem; margin-right: 5px; vertical-align: middle;">📘</span>
+                            <span style="font-weight: bold; color: #1877F2;">圖文操作教學：</span>
+                            詳細系統畫面與步驟，請參考 <a href="https://www.facebook.com/ncuepractice/posts/3612520888790942" target="_blank" style="color: #1877F2; text-decoration: underline;">實習生粉絲團貼文說明</a>。
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 子流程 2 內容 -->
+                <div class="sub3-content-panel">
+                    <div style="font-weight: bold; color: var(--accent-color); margin-bottom: 15px;">2.洽詢教育實習機構是否具備輔導實習學生之意願：</div>
+                    <div class="indent-1">(1)實習學生自我介紹(說明畢業學校以及系所，是否為該校校友)。</div>
+                    <div class="indent-1">(2)表達想去該校實習之理由(學習環境、師資以及學生素質優異等)。</div>
+                    <div class="indent-1">(3)洽詢方便到校簽核【實習申請書】之時間。</div>
+                </div>
+
+                <!-- 子流程 3 內容 -->
+                <div class="sub3-content-panel">
+                    <div style="font-weight: bold; color: var(--accent-color); margin-bottom: 15px;">3.實習申請書之簽核與上傳：</div>
+                    <div class="indent-1">(1)備妥【實習申請書】(共兩聯)，於事前談妥之時間至教育實習機構拜訪。</div>
+                    <div class="indent-1">(2)請校長及教務主任於【實習申請書】核章。</div>
+                    <div class="indent-1">(3)【實習申請書】留存：</div>
+                    <div class="indent-2">第一聯由教育實習機構留存。</div>
+                    <div class="indent-2">第二聯由學生上傳至「<a href="http://aps.ncue.edu.tw/practice/" target="_blank">教育實習管理系統</a>」後自行留存。</div>
+                    <div class="indent-1">(4)【實習申請書】上傳期限：</div>
+                    <div class="indent-2">參加第1學期實習者，請於3月31日前完成上傳。</div>
+                    <div class="indent-2">參加第2學期實習者，請於10月31日前完成上傳。</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="content-panel">
+            <h2>四、教育實習前學習服務</h2>
+            <p>師資生於教育實習前，應至教育現場參與學習服務工作至少三至五日，每次以全/半日為單位。</p>
+            <p>完成後請下載並填寫(含簽核)「<a href="https://practiceweb.ncue.edu.tw/var/file/7/1007/img/37/737768772.pdf" target="_blank">師資生學習服務紀錄表</a>」。</p>
+            
+            <div class="info-tabs-container">
+                <div class="info-tabs">
+                    <div class="info-tab-btn active" onclick="switchCategory4(0)" id="tabBtn0">
+                        <span class="tab-btn-icon">📋</span>
+                        <span class="tab-btn-text">學習服務內容</span>
+                    </div>
+                    <div class="info-tab-btn" onclick="switchCategory4(1)" id="tabBtn1">
+                        <span class="tab-btn-icon">🤝</span>
+                        <span class="tab-btn-text">參與方式</span>
+                    </div>
+                    <div class="info-tab-btn" onclick="switchCategory4(2)" id="tabBtn2">
+                        <span class="tab-btn-icon">⏰</span>
+                        <span class="tab-btn-text">上傳期限</span>
+                    </div>
+                </div>
+
+                <div class="sub4-content-panel active">
+                    <div style="font-weight: bold; color: var(--accent-color); margin-bottom: 15px;">學習服務內容</div>
+                    <div class="indent-1">(1)行政服務：至學校各處室協助行政工作。</div>
+                    <div class="indent-1">(2)教學學習：至班級進行觀課、議課或參與教學活動。</div>
+                </div>
+
+                <div class="sub4-content-panel">
+                    <div style="font-weight: bold; color: var(--accent-color); margin-bottom: 15px;">參與方式</div>
+                    <div class="indent-1">(1)獨自前往：持【實習申請書】至教育實習機構核章時，可一併與學校約定學習服務日期。</div>
+                    <div class="indent-1">(2)團隊前往：透過教學實習課程或教學服務營隊(如史懷哲教育服務計畫、白沙夏日學校、白沙x共好計畫等)。</div>
+                </div>
+
+                <div class="sub4-content-panel">
+                    <div style="font-weight: bold; color: var(--accent-color); margin-bottom: 15px;">上傳期限</div>
+                    <div>請於參加教育實習前2週將「<a href="https://practiceweb.ncue.edu.tw/var/file/7/1007/img/37/737768772.pdf" target="_blank">師資生學習服務紀錄表</a>」拍照上傳至「<a href="http://aps.ncue.edu.tw/practice/" target="_blank">教育實習管理系統</a>」，正本請自行妥善保存。</div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+    
+    <div class="cancel-section">
+        <h3>撤銷或終止教育實習</h3>
+        <div>如欲撤銷或終止教育實習，請下載以下表單，並依規定辦理相關程序。</div>
+        <div style="font-weight: bold; margin-top: 5px;">
+            <a href="https://practiceweb.ncue.edu.tw/var/file/7/1007/img/37/328367654.odt" target="_blank">實習學生撤銷／終止教育實習申請書及退還實習輔導費申請表</a>
+        </div>
+    </div>
+</div>
+
+<script>
+    const nodes = document.querySelectorAll('.timeline-node');
+    const panels = document.querySelectorAll('.content-panel');
+    const progressLine = document.getElementById('progressLine');
+
+    const sub3Nodes = Array.from(document.querySelectorAll('.sub3-node'));
+    const sub3Panels = document.querySelectorAll('.sub3-content-panel');
+    const sub3ProgressLine = document.getElementById('sub3ProgressLine');
+
+    const sub4Panels = document.querySelectorAll('.sub4-content-panel');
+
+    function switchStep(index) {
+        nodes.forEach((node, idx) => {
+            if (node) {
+                if (idx <= index) {
+                    node.classList.add('active');
+                } else {
+                    node.classList.remove('active');
+                }
+            }
+        });
+
+        panels.forEach((panel, idx) => {
+            if (panel) {
+                if (idx === index) {
+                    panel.classList.add('active');
+                } else {
+                    panel.classList.remove('active');
+                }
+            }
+        });
+
+        const isMobile = window.innerWidth <= 768;
+        const progressPercent = (index / (nodes.length - 1)) * 100;
+        
+        if (progressLine) {
+            if (!isMobile) {
+                progressLine.style.width = progressPercent + '%';
+                progressLine.style.height = '4px';
+            } else {
+                progressLine.style.height = progressPercent + '%';
+                progressLine.style.width = '4px';
+            }
+        }
+
+        if (index === 2) {
+            switchSubStep3(0);
+        }
+        if (index === 3) {
+            switchCategory4(0);
+        }
+    }
+
+    function switchSubStep3(sub3Index) {
+        if (sub3Nodes.length === 0) return;
+
+        sub3Nodes.forEach((node, idx) => {
+            if (node) {
+                if (idx <= sub3Index) {
+                    node.classList.add('active');
+                } else {
+                    node.classList.remove('active');
+                }
+            }
+        });
+
+        sub3Panels.forEach((panel, idx) => {
+            if (panel) {
+                if (idx === sub3Index) {
+                    panel.classList.add('active');
+                } else {
+                    panel.classList.remove('active');
+                }
+            }
+        });
+
+        const isMobile = window.innerWidth <= 768;
+        const sub3ProgressPercent = (sub3Index / (sub3Nodes.length - 1)) * 100;
+
+        if (sub3ProgressLine) {
+            if (!isMobile) {
+                sub3ProgressLine.style.width = sub3ProgressPercent + '%';
+                sub3ProgressLine.style.height = '3px';
+            } else {
+                sub3ProgressLine.style.height = sub3ProgressPercent + '%';
+                sub3ProgressLine.style.width = '3px';
+            }
+        }
+    }
+
+    function switchCategory4(categoryIndex) {
+        for (let i = 0; i < 3; i++) {
+            const btn = document.getElementById(`tabBtn${i}`);
+            if (btn) {
+                if (i === categoryIndex) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            }
+        }
+
+        sub4Panels.forEach((panel, idx) => {
+            if (panel) {
+                if (idx === categoryIndex) {
+                    panel.classList.add('active');
+                } else {
+                    panel.classList.remove('active');
+                }
+            }
+        });
+    }
+
+    let activeSemTab = 1;
+
+    function updateCurrentDateBanner() {
+        const today = new Date();
+        const currentYear = today.getFullYear();
+        const minguoYear = currentYear - 1911;
+        const currentMonth = today.getMonth() + 1;
+        const currentDate = today.getDate();
+        
+        const banner = document.getElementById('currentDateBanner');
+        if (banner) {
+            banner.innerText = `今日日期：${minguoYear} 年 ${currentMonth} 月 ${currentDate} 日`;
+        }
+    }
+
+    function switchCalcTab(sem) {
+        activeSemTab = sem;
+        
+        const tab1 = document.getElementById('tabSem1');
+        const tab2 = document.getElementById('tabSem2');
+        if (sem === 1) {
+            tab1.classList.add('active');
+            tab2.classList.remove('active');
+        } else {
+            tab1.classList.remove('active');
+            tab2.classList.add('active');
+        }
+
+        calculateSmartTimeline();
+    }
+
+    function calculateSmartTimeline() {
+        const today = new Date();
+        const currentYear = today.getFullYear();
+        const minguoCurrentYear = currentYear - 1911;
+
+        let targetInternshipYear;
+        let startAppYear, startAppMonth = 8, startAppDay = 1;
+        let endAppYear, endAppMonth, endAppDay;
+        let internYear, internMonth, internDay;
+        let serviceLimitYear, serviceLimitMonth, serviceLimitDay;
+
+        if (activeSemTab === 1) {
+            const endOfCurrentCycleApp = new Date(currentYear, 2, 31);
+            if (today <= endOfCurrentCycleApp) {
+                targetInternshipYear = minguoCurrentYear;
+            } else {
+                targetInternshipYear = minguoCurrentYear + 1;
+            }
+
+            internYear = targetInternshipYear;
+            internMonth = 8;
+            internDay = 1;
+
+            startAppYear = targetInternshipYear - 1;
+            endAppYear = targetInternshipYear;
+            endAppMonth = 3;
+            endAppDay = 31;
+
+            serviceLimitYear = targetInternshipYear;
+            serviceLimitMonth = 7;
+            serviceLimitDay = 18;
+        } else {
+            const endOfCurrentCycleApp = new Date(currentYear, 9, 31);
+            if (today <= endOfCurrentCycleApp) {
+                targetInternshipYear = minguoCurrentYear + 1;
+            } else {
+                targetInternshipYear = minguoCurrentYear + 2;
+            }
+
+            internYear = targetInternshipYear;
+            internMonth = 2;
+            internDay = 1;
+
+            startAppYear = targetInternshipYear - 1;
+            endAppYear = targetInternshipYear - 1;
+            endAppMonth = 10;
+            endAppDay = 31;
+
+            serviceLimitYear = targetInternshipYear;
+            serviceLimitMonth = 1;
+            serviceLimitDay = 18; 
+        }
+
+        let status = "";
+        let statusClass = "status-open";
+        const startDate = new Date(startAppYear + 1911, startAppMonth - 1, startAppDay);
+        const endDate = new Date(endAppYear + 1911, endAppMonth - 1, endAppDay);
+
+        if (today < startDate) {
+            status = "尚未開放";
+            statusClass = "status-upcoming";
+        } else if (today >= startDate && today <= endDate) {
+            status = "開放申請中！";
+            statusClass = "status-open";
+        } else {
+            status = "本學期已截止";
+            statusClass = "status-closed";
+        }
+
+        document.getElementById('resultTitle').innerText = `📊 最近可申請時段`;
+        
+        const badge = document.getElementById('statusBadge');
+        badge.innerText = status;
+        badge.className = `status-badge ${statusClass}`;
+
+        document.getElementById('dateIntern').innerText = `${internYear} 年 ${internMonth} 月 ${internDay} 日`;
+        document.getElementById('dateRange').innerText = `${startAppYear} 年 ${startAppMonth} 月 ${startAppDay} 日 至 ${endAppYear} 年 ${endAppMonth} 月 ${endAppDay} 日`;
+        document.getElementById('dateService').innerText = `實習前2週 (約 ${serviceLimitYear} 年 ${serviceLimitMonth} 月 ${serviceLimitDay} 日 前)`;
+    }
+
+    window.addEventListener('resize', () => {
+        const activeNode = Array.from(nodes).filter(n => n && n.classList.contains('active'));
+        const activeNodeIndex = activeNode.length > 0 ? activeNode.length - 1 : 0;
+        switchStep(activeNodeIndex);
+
+        const activeSub3 = sub3Nodes.filter(n => n && n.classList.contains('active'));
+        const activeSub3Index = activeSub3.length > 0 ? activeSub3.length - 1 : 0;
+        switchSubStep3(activeSub3Index);
+    });
+
+    window.onload = function() {
+        switchStep(0);
+        switchSubStep3(0);
+        switchCategory4(0);
+        
+        updateCurrentDateBanner();
+        calculateSmartTimeline();
+    };
+</script>
+
+</body>
+</html>
