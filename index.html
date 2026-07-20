@@ -6,10 +6,10 @@
     <title>教育實習申請流程</title>
     <style>
         :root {
-            --primary-color: #a63f38;   /* 圖片中的深紅色 */
-            --accent-color: #5d7a46;    /* 圖片中的樹木綠色 */
-            --bg-color: #fcf6ee;        /* 圖片中的暖米色背景 */
-            --text-color: #33221c;      /* 深咖啡色文字 */
+            --primary-color: #a63f38;
+            --accent-color: #5d7a46;
+            --bg-color: #fcf6ee;
+            --text-color: #33221c;
             --white: #ffffff;
             --gray: #e0dcd5;
         }
@@ -215,17 +215,36 @@
         }
 
         .calc-tab {
-            padding: 15px;
+            padding: 12px 10px;
             border-radius: 10px;
             border: 2px solid #c9bdae;
             background-color: var(--white);
             color: var(--text-color);
-            font-weight: bold;
-            font-size: 1.05rem;
             cursor: pointer;
             text-align: center;
             transition: all 0.3s ease;
             box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+            /* 使用 flexbox 確保不論文字長度與斷行，均保持上下左右置中 */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 0px;
+        }
+
+        .tab-year {
+            font-size: 1.15rem;
+            font-weight: 900;
+            line-height: 1.2;
+            text-align: center;
+        }
+
+        .tab-title {
+            font-size: 0.95rem;
+            font-weight: bold;
+            line-height: 1.2;
+            margin-top: 4px;
+            text-align: center;
         }
 
         .calc-tab:hover {
@@ -636,14 +655,16 @@
             <h2>一、申請時程</h2>
 
             <div class="calc-widget">
-                <div class="current-date-banner" id="currentDateBanner">今日日期：115 年 7 月 20 日</div>
+                <div class="current-date-banner" id="currentDateBanner">今日日期：載入中...</div>
                 
                 <div class="calc-tabs">
                     <div class="calc-tab active" id="tabSem1" onclick="switchCalcTab(1)">
-                        第 1 學期實習 (8月開始)
+                        <div class="tab-year">...學年度</div>
+                        <div class="tab-title">第 1 學期實習 (8月開始)</div>
                     </div>
                     <div class="calc-tab" id="tabSem2" onclick="switchCalcTab(2)">
-                        第 2 學期實習 (2月開始)
+                        <div class="tab-year">...學年度</div>
+                        <div class="tab-title">第 2 學期實習 (2月開始)</div>
                     </div>
                 </div>
 
@@ -655,15 +676,15 @@
                     <ul class="calc-result-list">
                         <li class="calc-result-item">
                             <span class="calc-label">🏫 預計教育實習時間：</span>
-                            <span class="calc-date" id="dateIntern">116 年 8 月 1 日</span>
+                            <span class="calc-date" id="dateIntern">載入中...</span>
                         </li>
                         <li class="calc-result-item">
                             <span class="calc-label">⏰ 申請起訖時段：</span>
-                            <span class="calc-date" id="dateRange">115 年 8 月 1 日 至 116 年 3 月 31 日</span>
+                            <span class="calc-date" id="dateRange">載入中...</span>
                         </li>
                         <li class="calc-result-item">
                             <span class="calc-label">📝 學習服務紀錄表上傳截止：</span>
-                            <span class="calc-date" id="dateService">實習前2週 (約 116 年 7 月 18 日 前)</span>
+                            <span class="calc-date" id="dateService">載入中...</span>
                         </li>
                     </ul>
                 </div>
@@ -703,14 +724,12 @@
                     </div>
                 </div>
 
-                <!-- 子流程 1 內容 -->
                 <div class="sub3-content-panel active">
                     <div style="font-weight: bold; color: var(--accent-color); margin-bottom: 15px;">1.確認教育實習機構是否適合，步驟請參考說明。</div>
                     <div class="indent-1">(1)以預計實習年度登錄教育部之「<a href="https://eii.ncue.edu.tw/?_gl=1*u1nrl2*_ga*MTc3NzcyMTc2Mi4xNzg0NTE2NDg4*_ga_JDDYXS6J5R*czE3ODQ1MzI0MzYkajYwJGwwJGgxMDQ5OTIwNzcz" target="_blank">全國教育實習資訊平臺</a>」。</div>
                     <div class="indent-1">(2)首頁點選【尋找教育實習學校】(淡藍色圓圈)，輸入該校校名。</div>
                     <div class="indent-1">(3)確認該校經主管機關認定為【適合】或是【可考量】之教育實習機構。</div>
                     
-                    <!-- 💡 在此處新增 FB 貼文連結區塊 -->
                     <div class="indent-1" style="margin-top: 15px;">
                         <div style="background-color: #eaf3ff; padding: 12px 15px; border-radius: 8px; border-left: 4px solid #1877F2; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
                             <span style="font-size: 1.2rem; margin-right: 5px; vertical-align: middle;">📘</span>
@@ -720,7 +739,6 @@
                     </div>
                 </div>
 
-                <!-- 子流程 2 內容 -->
                 <div class="sub3-content-panel">
                     <div style="font-weight: bold; color: var(--accent-color); margin-bottom: 15px;">2.洽詢教育實習機構是否具備輔導實習學生之意願：</div>
                     <div class="indent-1">(1)實習學生自我介紹(說明畢業學校以及系所，是否為該校校友)。</div>
@@ -728,7 +746,6 @@
                     <div class="indent-1">(3)洽詢方便到校簽核【實習申請書】之時間。</div>
                 </div>
 
-                <!-- 子流程 3 內容 -->
                 <div class="sub3-content-panel">
                     <div style="font-weight: bold; color: var(--accent-color); margin-bottom: 15px;">3.實習申請書之簽核與上傳：</div>
                     <div class="indent-1">(1)備妥【實習申請書】(共兩聯)，於事前談妥之時間至教育實習機構拜訪。</div>
@@ -922,6 +939,48 @@
         }
     }
 
+    function initTabs() {
+        const today = new Date();
+        const currentYear = today.getFullYear();
+        const minguoCurrentYear = currentYear - 1911;
+
+        // 計算 第 1 學期 對應之學年度
+        let sem1AcYear;
+        const endOfCycle1 = new Date(currentYear, 2, 31); // 3月31日截止
+        if (today <= endOfCycle1) {
+            sem1AcYear = minguoCurrentYear;
+        } else {
+            sem1AcYear = minguoCurrentYear + 1;
+        }
+
+        // 計算 第 2 學期 對應之學年度
+        let sem2AcYear;
+        const endOfCycle2 = new Date(currentYear, 9, 31); // 10月31日截止
+        if (today <= endOfCycle2) {
+            // 在截止前，實習為隔年2月(即今年度的下學期)
+            sem2AcYear = minguoCurrentYear; 
+        } else {
+            // 截止後，實習為後年2月(即明年度的下學期)
+            sem2AcYear = minguoCurrentYear + 1; 
+        }
+
+        const tab1 = document.getElementById('tabSem1');
+        const tab2 = document.getElementById('tabSem2');
+        
+        if (tab1) {
+            tab1.innerHTML = `
+                <div class="tab-year">${sem1AcYear} 學年度</div>
+                <div class="tab-title">第 1 學期實習 (8月開始)</div>
+            `;
+        }
+        if (tab2) {
+            tab2.innerHTML = `
+                <div class="tab-year">${sem2AcYear} 學年度</div>
+                <div class="tab-title">第 2 學期實習 (2月開始)</div>
+            `;
+        }
+    }
+
     function switchCalcTab(sem) {
         activeSemTab = sem;
         
@@ -948,6 +1007,7 @@
         let endAppYear, endAppMonth, endAppDay;
         let internYear, internMonth, internDay;
         let serviceLimitYear, serviceLimitMonth, serviceLimitDay;
+        let academicYear; // 新增：用於儲存該次實習所屬之學年度
 
         if (activeSemTab === 1) {
             const endOfCurrentCycleApp = new Date(currentYear, 2, 31);
@@ -957,6 +1017,7 @@
                 targetInternshipYear = minguoCurrentYear + 1;
             }
 
+            academicYear = targetInternshipYear; // 第1學期(8月)，實習年與學年度相同
             internYear = targetInternshipYear;
             internMonth = 8;
             internDay = 1;
@@ -977,6 +1038,7 @@
                 targetInternshipYear = minguoCurrentYear + 2;
             }
 
+            academicYear = targetInternshipYear - 1; // 第2學期(2月)，學年度為實習年減1
             internYear = targetInternshipYear;
             internMonth = 2;
             internDay = 1;
@@ -1013,7 +1075,9 @@
         badge.innerText = status;
         badge.className = `status-badge ${statusClass}`;
 
-        document.getElementById('dateIntern').innerText = `${internYear} 年 ${internMonth} 月 ${internDay} 日`;
+        // 更新：將學年度資訊也顯示在結果列表中，雙重確認更清楚！
+        document.getElementById('dateIntern').innerText = `${academicYear} 學年度第 ${activeSemTab} 學期 (${internYear} 年 ${internMonth} 月 ${internDay} 日起)`;
+        
         document.getElementById('dateRange').innerText = `${startAppYear} 年 ${startAppMonth} 月 ${startAppDay} 日 至 ${endAppYear} 年 ${endAppMonth} 月 ${endAppDay} 日`;
         document.getElementById('dateService').innerText = `實習前2週 (約 ${serviceLimitYear} 年 ${serviceLimitMonth} 月 ${serviceLimitDay} 日 前)`;
     }
@@ -1034,6 +1098,7 @@
         switchCategory4(0);
         
         updateCurrentDateBanner();
+        initTabs(); // 初始化並將學年度動態寫入頁籤中
         calculateSmartTimeline();
     };
 </script>
