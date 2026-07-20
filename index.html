@@ -110,9 +110,9 @@ align-items: center;
 text-align: center;
 cursor: pointer;
 z-index: 2;
-flex: 1 1 0%; /* 強制平分 */
-min-width: 0;  /* 強制平分 */
-padding: 0 4px; /* 加上微小內距，確保節點之間絕對不碰撞 */
+flex: 1 1 0%;
+min-width: 0;
+padding: 0 4px;
 animation: nodePop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) both;
 }
 .timeline-node:nth-child(3) { animation-delay: 0.15s; }
@@ -146,7 +146,6 @@ font-size: 0.95rem;
 font-weight: bold;
 color: #7c726e;
 transition: var(--transition-smooth);
-/* 解決文字重疊的關鍵：允許文字自動換行 */
 white-space: normal;
 word-break: normal;
 overflow-wrap: anywhere;
@@ -352,8 +351,8 @@ align-items: center;
 text-align: center; 
 cursor: pointer; 
 z-index: 2; 
-flex: 1 1 0%; /* 強制平分 */
-min-width: 0;  /* 強制平分 */
+flex: 1 1 0%;
+min-width: 0;
 padding: 0 2px;
 }
 .sub-circle { width: 40px; height: 40px; border-radius: 50%; background-color: var(--white); border: 3px solid var(--gray); color: var(--text-color); display: flex; justify-content: center; align-items: center; font-size: 1rem; font-weight: bold; transition: var(--transition-smooth); box-shadow: 0 2px 6px rgba(0,0,0,0.05); }
@@ -363,7 +362,6 @@ font-size: 0.85rem;
 font-weight: bold; 
 color: #7c726e; 
 transition: var(--transition-smooth);
-/* 解決文字重疊 */
 white-space: normal;
 word-break: normal;
 overflow-wrap: anywhere;
@@ -387,6 +385,50 @@ line-height: 1.3;
 .sub4-content-panel { display: none; animation: panelSlideIn 0.4s cubic-bezier(0.25, 1, 0.5, 1) both; padding: 15px 5px 5px 5px; border-top: 1px dashed var(--gray); }
 .sub4-content-panel.active { display: block; }
 
+/* 步驟導航按鈕樣式 */
+.step-navigation {
+display: flex;
+justify-content: space-between;
+align-items: center;
+margin-top: 30px;
+padding-top: 20px;
+border-top: 1px dashed var(--gray);
+}
+.step-navigation.right-only {
+justify-content: flex-end;
+}
+.nav-btn {
+padding: 10px 24px;
+border-radius: 30px;
+font-size: 0.95rem;
+font-weight: bold;
+cursor: pointer;
+border: none;
+transition: var(--transition-smooth);
+display: flex;
+align-items: center;
+gap: 8px;
+font-family: inherit;
+}
+.nav-btn.prev-btn {
+background-color: var(--gray);
+color: #554842;
+}
+.nav-btn.prev-btn:hover {
+background-color: #d1cbc2;
+transform: translateX(-4px);
+}
+.nav-btn.next-btn {
+background-color: var(--primary-color);
+color: var(--white);
+box-shadow: var(--shadow-sm);
+}
+.nav-btn.next-btn:hover {
+background-color: #8a332a;
+transform: translateX(4px);
+box-shadow: var(--shadow-md);
+}
+
 /* 針對手機/平板版的閱讀體驗優化 */
 @media (max-width: 768px) {
 body { padding: 15px 10px; }
@@ -408,8 +450,8 @@ flex-direction: column;
 text-align: center; 
 gap: 6px; 
 padding: 0 2px; 
-flex: 1 1 0%; /* 強制平分 */
-min-width: 0; /* 強制平分 */
+flex: 1 1 0%;
+min-width: 0;
 }
 .circle { width: 40px; height: 40px; font-size: 1.05rem; border-width: 3px; margin: 0 auto; }
 .node-title { 
@@ -417,7 +459,6 @@ margin-top: 2px;
 font-size: 0.75rem; 
 line-height: 1.25; 
 letter-spacing: -0.2px;
-/* 徹底解決手機版文字不換行重疊的問題 */
 word-break: normal; 
 overflow-wrap: anywhere;
 white-space: normal;
@@ -460,8 +501,8 @@ flex-direction: column;
 text-align: center; 
 gap: 6px; 
 padding: 0 2px;
-flex: 1 1 0%; /* 強制平分 */
-min-width: 0; /* 強制平分 */
+flex: 1 1 0%;
+min-width: 0;
 }
 .sub-circle { width: 34px; height: 34px; font-size: 0.95rem; border-width: 2px; margin: 0 auto; }
 .sub-node-title { 
@@ -482,6 +523,9 @@ white-space: normal;
 
 /* 撤銷區塊 */
 .cancel-section { padding: 20px 15px; }
+
+/* 手機版按鈕微調 */
+.nav-btn { font-size: 0.85rem; padding: 8px 16px; }
 }
 </style>
 </head>
@@ -549,7 +593,12 @@ white-space: normal;
 </ul>
 </div>
 </div>
+<!-- 步驟一導航 -->
+<div class="step-navigation right-only">
+<button class="nav-btn next-btn" onclick="switchStep(1)">下一步：申請方式 ➔</button>
 </div>
+</div>
+
 <!-- 步驟二：申請方式 -->
 <div class="content-panel">
 <h2>二、申請方式</h2>
@@ -559,7 +608,13 @@ white-space: normal;
 <div class="indent-1">1.請務必於系統中直接列印，勿下載後再列印，以避免文件缺字。</div>
 <div class="indent-1">2.申請案件約需 3 個工作天審查，請儘早提出申請，以免影響後續作業。</div>
 </div>
+<!-- 步驟二導航 -->
+<div class="step-navigation">
+<button class="nav-btn prev-btn" onclick="switchStep(0)">⬅ 上一步：申請時程</button>
+<button class="nav-btn next-btn" onclick="switchStep(2)">下一步：選擇教育實習機構 ➔</button>
 </div>
+</div>
+
 <!-- 步驟三：選擇教育實習機構 -->
 <div class="content-panel">
 <h2>三、選擇教育實習機構</h2>
@@ -614,7 +669,13 @@ white-space: normal;
 <div class="indent-2">參加第2學期實習者，請於10月31日前完成上傳。</div>
 </div>
 </div>
+<!-- 步驟三導航 -->
+<div class="step-navigation">
+<button class="nav-btn prev-btn" onclick="switchStep(1)">⬅ 上一步：申請方式</button>
+<button class="nav-btn next-btn" onclick="switchStep(3)">下一步：教育實習前學習服務 ➔</button>
 </div>
+</div>
+
 <!-- 步驟四：教育實習前學習服務 -->
 <div class="content-panel">
 <h2>四、教育實習前學習服務</h2>
@@ -650,7 +711,13 @@ white-space: normal;
 <div>請於參加教育實習前2週將「<a href="https://practiceweb.ncue.edu.tw/var/file/7/1007/img/37/737768772.pdf" target="_blank">師資生學習服務紀錄表</a>」拍照上傳至「<a href="http://aps.ncue.edu.tw/practice/" target="_blank">教育實習管理系統</a>」，正本請自行妥善保存。</div>
 </div>
 </div>
+<!-- 步驟四導航 -->
+<div class="step-navigation">
+<button class="nav-btn prev-btn" onclick="switchStep(2)">⬅ 上一步：選擇教育實習機構</button>
+<button class="nav-btn next-btn" onclick="switchStep(4)">下一步：參加教育實習 ↗</button>
 </div>
+</div>
+
 <!-- 步驟五：參加教育實習 -->
 <div class="content-panel">
 <h2>五、參加教育實習</h2>
@@ -667,7 +734,12 @@ white-space: normal;
 </a>
 </div>
 </div>
+<!-- 步驟五導航 -->
+<div class="step-navigation">
+<button class="nav-btn prev-btn" onclick="switchStep(3)">⬅ 上一步：教育實習前學習服務</button>
 </div>
+</div>
+
 </div>
 <!-- 撤銷區塊 -->
 <div class="cancel-section">
