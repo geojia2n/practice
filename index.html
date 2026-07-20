@@ -31,14 +31,8 @@ padding: 40px 20px;
 overflow-x: hidden;
 }
 @keyframes containerEntrance {
-from {
-opacity: 0;
-transform: translateY(30px);
-}
-to {
-opacity: 1;
-transform: translateY(0);
-}
+from { opacity: 0; transform: translateY(30px); }
+to { opacity: 1; transform: translateY(0); }
 }
 .container {
 max-width: 900px;
@@ -81,7 +75,7 @@ color: var(--accent-color);
 .timeline-nav {
 display: flex;
 justify-content: space-between;
-align-items: center;
+align-items: flex-start;
 position: relative;
 margin-bottom: 40px;
 padding: 0 10px;
@@ -116,7 +110,9 @@ align-items: center;
 text-align: center;
 cursor: pointer;
 z-index: 2;
-flex: 1;
+flex: 1 1 0%; /* 強制平分 */
+min-width: 0;  /* 強制平分 */
+padding: 0 4px; /* 加上微小內距，確保節點之間絕對不碰撞 */
 animation: nodePop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) both;
 }
 .timeline-node:nth-child(3) { animation-delay: 0.15s; }
@@ -150,6 +146,11 @@ font-size: 0.95rem;
 font-weight: bold;
 color: #7c726e;
 transition: var(--transition-smooth);
+/* 解決文字重疊的關鍵：允許文字自動換行 */
+white-space: normal;
+word-break: normal;
+overflow-wrap: anywhere;
+line-height: 1.3;
 }
 .timeline-node:not(.active):hover .circle {
 transform: scale(1.05);
@@ -332,7 +333,7 @@ box-shadow: inset 0 2px 6px rgba(0,0,0,0.01);
 .sub-timeline-nav {
 display: flex;
 justify-content: space-between;
-align-items: center;
+align-items: flex-start;
 position: relative;
 margin-bottom: 30px;
 padding: 0 10px;
@@ -344,9 +345,30 @@ padding: 0 10px;
 70% { box-shadow: 0 0 0 8px rgba(93, 122, 70, 0); }
 100% { box-shadow: 0 0 0 0 rgba(93, 122, 70, 0); }
 }
-.sub-timeline-node { display: flex; flex-direction: column; align-items: center; text-align: center; cursor: pointer; z-index: 2; flex: 1; }
+.sub-timeline-node { 
+display: flex; 
+flex-direction: column; 
+align-items: center; 
+text-align: center; 
+cursor: pointer; 
+z-index: 2; 
+flex: 1 1 0%; /* 強制平分 */
+min-width: 0;  /* 強制平分 */
+padding: 0 2px;
+}
 .sub-circle { width: 40px; height: 40px; border-radius: 50%; background-color: var(--white); border: 3px solid var(--gray); color: var(--text-color); display: flex; justify-content: center; align-items: center; font-size: 1rem; font-weight: bold; transition: var(--transition-smooth); box-shadow: 0 2px 6px rgba(0,0,0,0.05); }
-.sub-node-title { margin-top: 8px; font-size: 0.85rem; font-weight: bold; color: #7c726e; transition: var(--transition-smooth); }
+.sub-node-title { 
+margin-top: 8px; 
+font-size: 0.85rem; 
+font-weight: bold; 
+color: #7c726e; 
+transition: var(--transition-smooth);
+/* 解決文字重疊 */
+white-space: normal;
+word-break: normal;
+overflow-wrap: anywhere;
+line-height: 1.3;
+}
 .sub-timeline-node:not(.active):hover .sub-circle { transform: scale(1.1); border-color: #b5aba4; }
 .sub-timeline-node.active .sub-circle { background-color: var(--accent-color); border-color: var(--accent-color); color: var(--white); transform: scale(1.15); animation: subActivePulse 2s infinite; }
 .sub-timeline-node.active .sub-node-title { color: var(--accent-color); }
@@ -365,27 +387,43 @@ padding: 0 10px;
 .sub4-content-panel { display: none; animation: panelSlideIn 0.4s cubic-bezier(0.25, 1, 0.5, 1) both; padding: 15px 5px 5px 5px; border-top: 1px dashed var(--gray); }
 .sub4-content-panel.active { display: block; }
 
-/* 針對手機版的閱讀體驗優化 */
+/* 針對手機/平板版的閱讀體驗優化 */
 @media (max-width: 768px) {
 body { padding: 15px 10px; }
 .container { padding: 20px 15px; border-radius: 12px; }
 h1 { font-size: 1.4rem; margin-bottom: 25px; }
 
-/* 主時間軸改為橫向均分，節省垂直空間 */
+/* 主時間軸橫向均分 */
 .timeline-nav {
 flex-direction: row;
 align-items: flex-start;
-gap: 2px;
+gap: 0;
 padding-left: 0;
-margin-bottom: 20px;
+margin-bottom: 25px;
 }
 .timeline-line { left: 0; top: 20px; width: 100%; height: 3px; }
 .timeline-progress { left: 0; top: 20px; height: 3px; width: 0%; }
-.timeline-node { flex-direction: column; text-align: center; gap: 6px; width: auto; padding: 0; flex: 1; }
+.timeline-node { 
+flex-direction: column; 
+text-align: center; 
+gap: 6px; 
+padding: 0 2px; 
+flex: 1 1 0%; /* 強制平分 */
+min-width: 0; /* 強制平分 */
+}
 .circle { width: 40px; height: 40px; font-size: 1.05rem; border-width: 3px; margin: 0 auto; }
-.node-title { margin-top: 0; font-size: 0.75rem; line-height: 1.15; letter-spacing: -0.5px; word-break: keep-all; }
+.node-title { 
+margin-top: 2px; 
+font-size: 0.75rem; 
+line-height: 1.25; 
+letter-spacing: -0.2px;
+/* 徹底解決手機版文字不換行重疊的問題 */
+word-break: normal; 
+overflow-wrap: anywhere;
+white-space: normal;
+}
 
-/* 說明內容視窗：移除過重的左邊框，改為頂部邊框與全圓角 */
+/* 說明內容視窗 */
 .content-container {
 border-left: none;
 border-top: 5px solid var(--primary-color);
@@ -397,7 +435,7 @@ h2 { font-size: 1.2rem; margin-bottom: 15px; }
 
 /* 步驟一：計算器區域 */
 .calc-widget { padding: 15px; }
-.calc-tabs { grid-template-columns: 1fr 1fr; gap: 8px; } /* 手機依然保持並排兩欄 */
+.calc-tabs { grid-template-columns: 1fr 1fr; gap: 8px; }
 .calc-tab { padding: 12px 5px; }
 .tab-year { font-size: 0.9rem; }
 .tab-title { font-size: 0.8rem; }
@@ -406,24 +444,38 @@ h2 { font-size: 1.2rem; margin-bottom: 15px; }
 .calc-result-item { flex-direction: column; align-items: flex-start; gap: 4px; }
 .calc-date { text-align: left; font-size: 1rem; }
 
-/* 步驟三：子時間軸也改為橫向排列 */
+/* 步驟三：子時間軸也改為橫向平分排列 */
 .sub-timeline-container { padding: 15px; }
 .sub-timeline-nav {
 flex-direction: row;
 align-items: flex-start;
-gap: 2px;
+gap: 0;
 padding-left: 0;
 margin-bottom: 20px;
 }
 .sub-timeline-line { left: 0; top: 17px; width: 100%; height: 2px; }
 .sub-timeline-progress { left: 0; top: 17px; height: 2px; width: 0%; }
-.sub-timeline-node { flex-direction: column; text-align: center; gap: 6px; width: auto; flex: 1; }
+.sub-timeline-node { 
+flex-direction: column; 
+text-align: center; 
+gap: 6px; 
+padding: 0 2px;
+flex: 1 1 0%; /* 強制平分 */
+min-width: 0; /* 強制平分 */
+}
 .sub-circle { width: 34px; height: 34px; font-size: 0.95rem; border-width: 2px; margin: 0 auto; }
-.sub-node-title { margin-top: 0; font-size: 0.75rem; line-height: 1.15; }
+.sub-node-title { 
+margin-top: 2px; 
+font-size: 0.75rem; 
+line-height: 1.25; 
+word-break: normal; 
+overflow-wrap: anywhere;
+white-space: normal;
+}
 
 /* 步驟四：資訊頁籤 */
 .info-tabs-container { padding: 15px; }
-.info-tabs { grid-template-columns: repeat(3, 1fr); gap: 5px; } /* 保持三個按鈕並排 */
+.info-tabs { grid-template-columns: repeat(3, 1fr); gap: 5px; }
 .info-tab-btn { flex-direction: column; justify-content: center; gap: 6px; padding: 10px 5px; }
 .tab-btn-icon { font-size: 1.2rem; }
 .tab-btn-text { font-size: 0.75rem; text-align: center; letter-spacing: -0.5px; }
@@ -635,7 +687,6 @@ const sub3Panels = document.querySelectorAll('.sub3-content-panel');
 const sub3ProgressLine = document.getElementById('sub3ProgressLine');
 const sub4Panels = document.querySelectorAll('.sub4-content-panel');
 
-// 新增狀態變數：避免載入或縮放視窗時產生非預期的滾動與新視窗彈出
 let isInitializing = true;
 let isResizing = false;
 
@@ -656,7 +707,6 @@ else { panel.classList.remove('active'); }
 const isMobile = window.innerWidth <= 768;
 const progressPercent = (index / (nodes.length - 1)) * 100;
 if (progressLine) {
-// 不論手機或電腦，現在都採用水平進度條邏輯
 progressLine.style.width = progressPercent + '%';
 progressLine.style.height = isMobile ? '3px' : '4px';
 }
@@ -664,7 +714,6 @@ progressLine.style.height = isMobile ? '3px' : '4px';
 if (index === 2) { switchSubStep3(0); }
 if (index === 3) { switchCategory4(0); }
 
-// 手機版優化：點擊步驟後，平滑滾動至內容視窗，不用手動往下滑
 if (isMobile && !isInitializing && !isResizing) {
 const container = document.querySelector('.content-container');
 if (container) {
@@ -673,7 +722,6 @@ window.scrollTo({ top: y, behavior: 'smooth' });
 }
 }
 
-// 修正：只有在使用者真正點擊時才彈出新視窗，防止縮放畫面時不斷彈出
 if (index === 4 && !isInitializing && !isResizing) {
 window.open('https://practiceweb.ncue.edu.tw/p/412-1007-4267.php?Lang=zh-tw', '_blank');
 }
